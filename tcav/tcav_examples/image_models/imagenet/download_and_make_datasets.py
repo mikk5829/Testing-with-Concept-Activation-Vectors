@@ -38,12 +38,14 @@ import argparse
 from tensorflow.io import gfile
 import imagenet_and_broden_fetcher as fetcher
 
+
 def make_concepts_targets_and_randoms(source_dir, number_of_images_per_folder, number_of_random_folders):
     # Run script to download data to source_dir
     if not gfile.exists(source_dir):
         gfile.makedirs(source_dir)
-    if not gfile.exists(os.path.join(source_dir,'broden1_224/')) or not gfile.exists(os.path.join(source_dir,'inception5h')):
-        subprocess.call(['bash' , 'FetchDataAndModels.sh', source_dir])
+    if not gfile.exists(os.path.join(source_dir, 'broden1_224/')) or not gfile.exists(
+            os.path.join(source_dir, 'inception5h')):
+        subprocess.call(['bash', 'FetchDataAndModels.sh', source_dir])
 
     # Determine classes that we will fetch
     imagenet_classes = ['zebra']
@@ -52,24 +54,29 @@ def make_concepts_targets_and_randoms(source_dir, number_of_images_per_folder, n
     # make targets from imagenet
     imagenet_dataframe = fetcher.make_imagenet_dataframe("./imagenet_url_map.csv")
     for image in imagenet_classes:
-        fetcher.fetch_imagenet_class(source_dir, image, number_of_images_per_folder, imagenet_dataframe)
+        try:
+            fetcher.fetch_imagenet_class(source_dir, image, number_of_images_per_folder, imagenet_dataframe)
+        except:
+            print("Error fetching class: ", image)
 
     # Make concepts from broden
     for concept in broden_concepts:
-        fetcher.download_texture_to_working_folder(broden_path=os.path.join(source_dir, 'broden1_224'),
-                                                   saving_path=source_dir,
-                                                   texture_name=concept,
-                                                   number_of_images=number_of_images_per_folder)
+        try:
+            fetcher.download_texture_to_working_folder(broden_path=os.path.join(source_dir, 'broden1_224'),
+                                                       saving_path=source_dir,
+                                                       texture_name=concept,
+                                                       number_of_images=number_of_images_per_folder)
+        except:
+            print("Error fetching concept: ", concept)
 
     # Make random folders. If we want to run N random experiments with tcav, we need N+1 folders.
     fetcher.generate_random_folders(
         working_directory=source_dir,
         random_folder_prefix="random500",
-        number_of_random_folders=number_of_random_folders+1,
+        number_of_random_folders=number_of_random_folders + 1,
         number_of_examples_per_folder=number_of_images_per_folder,
         imagenet_dataframe=imagenet_dataframe
     )
-
 
 
 if __name__ == '__main__':
@@ -89,4 +96,3 @@ if __name__ == '__main__':
     # Make data
     make_concepts_targets_and_randoms(args.source_dir, args.number_of_images_per_folder, args.number_of_random_folders)
     print("Successfully created data at " + args.source_dir)
-
