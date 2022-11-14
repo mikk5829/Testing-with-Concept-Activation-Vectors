@@ -3,6 +3,8 @@
 /*.egg-info
 .ipynb_checkpoints/
 build/
-
+tcav/tcav_examples/image_models/imagenet/images
 
 .DS_Store
+
+.idea/
