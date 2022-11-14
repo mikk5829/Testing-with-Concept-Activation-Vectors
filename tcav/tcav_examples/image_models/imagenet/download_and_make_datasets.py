@@ -54,6 +54,7 @@ def make_concepts_targets_and_randoms(source_dir, number_of_images_per_folder, n
     # make targets from imagenet
     imagenet_dataframe = fetcher.make_imagenet_dataframe("./imagenet_url_map.csv")
     for image in imagenet_classes:
+        print("Fetching images for class: ", image)
         try:
             fetcher.fetch_imagenet_class(source_dir, image, number_of_images_per_folder, imagenet_dataframe)
         except:
@@ -61,6 +62,7 @@ def make_concepts_targets_and_randoms(source_dir, number_of_images_per_folder, n
 
     # Make concepts from broden
     for concept in broden_concepts:
+        print("Fetching concept for class: ", concept)
         try:
             fetcher.download_texture_to_working_folder(broden_path=os.path.join(source_dir, 'broden1_224'),
                                                        saving_path=source_dir,
