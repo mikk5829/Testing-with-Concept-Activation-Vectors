@@ -273,6 +273,7 @@ def generate_random_folders(working_directory, random_folder_prefix,
                             number_of_examples_per_folder, imagenet_dataframe):
   imagenet_concepts = imagenet_dataframe["class_name"].values.tolist()
   for partition_number in range(number_of_random_folders):
+    print("Generating random folder " + str(partition_number))
     partition_name = random_folder_prefix + "_" + str(partition_number)
     partition_folder_path = os.path.join(working_directory, partition_name)
     tf.io.gfile.makedirs(partition_folder_path)
