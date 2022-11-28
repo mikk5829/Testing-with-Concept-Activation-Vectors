@@ -154,4 +154,5 @@ def plot_results(results, random_counterpart=None, random_concepts=None, num_ran
   ax.set_xticklabels(plot_concepts)
   ax.legend()
   fig.tight_layout()
+  plt.savefig(results[0]['target_class'] + str(num_random_exp) + '.png')
   plt.show()
