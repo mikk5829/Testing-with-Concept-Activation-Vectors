@@ -177,6 +177,12 @@ def fetch_imagenet_class(path, class_name, number_of_images, imagenet_dataframe)
     # Check to see if this class name exists. Fetch all urls if so.
     all_images = fetch_all_urls_for_concept(imagenet_dataframe, class_name)
 
+    _, _, files = next(os.walk(concept_path))
+    count = len(files)
+    if count >= number_of_images:
+        print("Directory", concept_path, "has enough images. Skipping.")
+        return
+
     # Fetch number_of_images images or as many as you can.
     num_downloaded = 0
     for image_url in all_images:
