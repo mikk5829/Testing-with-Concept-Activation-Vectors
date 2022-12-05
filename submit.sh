@@ -30,4 +30,4 @@
 
 # here follow the commands you want to execute with input.in as the input file
 source ~/gpu_tensor/bin/activate
-python Run_TCAV.py > output.out
+min_p_val=0.05 num_random_exp=30 num_img=20 python Run_TCAV.py > output.out

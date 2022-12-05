@@ -1,3 +1,5 @@
+import os
+
 import absl
 import seaborn as sns
 
@@ -29,7 +31,8 @@ if __name__ == '__main__':
 
     # TODO: replace 'YOUR_PATH' with path to downloaded models and images.
     source_dir = 'tcav/tcav_examples/image_models/imagenet/images'
-    bottlenecks = ['mixed3a', 'mixed3b', 'mixed4a', 'mixed4b', 'mixed4c', 'mixed4d', 'mixed4e', 'mixed5a', 'mixed5b']  # @param
+    bottlenecks = ['mixed3a', 'mixed3b', 'mixed4a', 'mixed4b', 'mixed4c', 'mixed4d', 'mixed4e', 'mixed5a',
+                   'mixed5b']  # @param
     # bottlenecks = ['mixed3a', 'mixed3b']  # @param
 
     utils.make_dir_if_not_exists(activation_dir)
@@ -61,10 +64,13 @@ if __name__ == '__main__':
                                             GRAPH_PATH,
                                             LABEL_PATH)
 
-    num_img = 10
+    num_img = int(os.environ.get('num_img')) if os.environ.get('num_img') else 10
+    print("num_img", num_img)
+
     act_generator = act_gen.ImageActivationGenerator(mymodel, source_dir, activation_dir, max_examples = num_img)
 
-    num_random_exp = 10
+    num_random_exp = int(os.environ.get('num_random_exp')) if os.environ.get('num_random_exp') else 10
+    print("num_random_exp", num_random_exp)
     ## only running num_random_exp = 10 to save some time. The paper number are reported for 500 random runs.
     mytcav = tcav.TCAV(sess,
                        target,
@@ -77,4 +83,6 @@ if __name__ == '__main__':
     print('This may take a while... Go get coffee!')
     results = mytcav.run(run_parallel = True)
     print('done!')
-    utils_plot.plot_results(results, num_random_exp = num_random_exp, num_max_img = num_img, min_p_val = 0.001)
+    min_p_val = int(os.environ.get('min_p_val')) if os.environ.get('min_p_val') else 0.001
+    print("min_p_val", min_p_val)
+    utils_plot.plot_results(results, num_random_exp = num_random_exp, num_max_img = num_img, min_p_val = min_p_val)
