@@ -1,6 +1,5 @@
 import os
 
-import absl
 import seaborn as sns
 
 import tcav.activation_generator as act_gen
@@ -11,7 +10,6 @@ import tcav.utils_plot as utils_plot  # utils_plot requires matplotlib
 
 sns.set_theme(style = "white")
 sns.set_palette("Paired")  # Paired
-absl.logging.set_verbosity(0)
 
 if __name__ == '__main__':
     print('REMEMBER TO UPDATE YOUR_PATH (where images, models are)!')
