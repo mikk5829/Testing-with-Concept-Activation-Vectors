@@ -218,6 +218,7 @@ class TCAV(object):
             p, overwrite=overwrite, run_parallel=run_parallel),
           self.params), 1):
         tf.compat.v1.logging.info('Finished running param %s of %s' % (i, len(self.params)))
+        print('Finished running param %s of %s' % (i, len(self.params)))
         results.append(res)
       pool.close()
     else:

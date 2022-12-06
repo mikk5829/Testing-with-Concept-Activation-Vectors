@@ -19,7 +19,7 @@ if __name__ == '__main__':
     user = 'beenkim'
     # the name of the parent directory that results are stored (only if you want to cache)
     project_name = 'tcav_class_test'
-    working_dir = "/tmp/" + user + '/' + project_name
+    working_dir = "./tmp/" + user + '/' + project_name
     # where activations are stored (only if your act_gen_wrapper does so)
     activation_dir = working_dir + '/activations/'
     # where CAVs are stored.
