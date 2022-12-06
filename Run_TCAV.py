@@ -83,6 +83,6 @@ if __name__ == '__main__':
     print('This may take a while... Go get coffee!')
     results = mytcav.run(run_parallel = True)
     print('done!')
-    min_p_val = int(os.environ.get('min_p_val')) if os.environ.get('min_p_val') else 0.001
+    min_p_val = float(os.environ.get('min_p_val')) if os.environ.get('min_p_val') else 0.001
     print("min_p_val", min_p_val)
     utils_plot.plot_results(results, num_random_exp = num_random_exp, num_max_img = num_img, min_p_val = min_p_val)
