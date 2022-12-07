@@ -89,7 +89,7 @@ class TCAV(object):
     count = 0
     class_id = mymodel.label_to_id(target_class)
     if run_parallel:
-      pool = multiprocessing.Pool()
+      pool = multiprocessing.Pool(num_workers)
       directions = pool.map(
           lambda i: TCAV.get_direction_dir_sign(
               mymodel, np.expand_dims(class_acts[i], 0),
@@ -212,7 +212,7 @@ class TCAV(object):
     results = []
     now = time.time()
     if run_parallel:
-      pool = multiprocessing.Pool()
+      pool = multiprocessing.Pool(num_workers)
       for i, res in enumerate(pool.imap(
           lambda p: self._run_single_set(
             p, overwrite=overwrite, run_parallel=run_parallel),
